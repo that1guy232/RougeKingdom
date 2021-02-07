@@ -58,7 +58,7 @@ gameTiles = {
   {
     name = "player",
     id = 99,
-    graphic = love.graphics.newImage("gfx/player.png"),
+    graphic = love.graphics.newImage("gfx/painSteve.png"),
     Xoff   = 0,
     Yoff   = 0
   },
@@ -75,7 +75,28 @@ gameTiles = {
     graphic = love.graphics.newImage("gfx/peasant.png"),
     Xoff = 0,
     Yoff = -8
-  }
+  },
+  {
+    name = "speechBubbleR",
+    id = 11,
+    graphic = love.graphics.newImage("gfx/speech/speechr.png"),
+    Xoff = 0,
+    Yoff = 0
+  },
+  {
+      name = "speechBubbleM",
+      id = 11,
+      graphic = love.graphics.newImage("gfx/speech/speechm.png"),
+      Xoff = 0,
+      Yoff = 0
+    },
+    {
+        name = "speechBubbleL",
+        id = 11,
+        graphic = love.graphics.newImage("gfx/speech/speechl.png"),
+        Xoff = 0,
+        Yoff = 0
+    }
 }
 
 
@@ -87,6 +108,13 @@ function  getTileNameById(id)
   end
 end
 
+function  getTileById(id)
+  for i = 1, table.maxn(gameTiles) do
+    if gameTiles[i].id == id then
+      return gameTiles[i]
+    end
+  end
+end
 
 function  getTileByName(name)
   for i = 1, table.maxn(gameTiles) do

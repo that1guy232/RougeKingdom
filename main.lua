@@ -167,6 +167,9 @@ function love.draw()
   end
 
 
+
+  drawPopup()
+
   if gameState ==  invState then
     drawInventory()
   end
@@ -299,6 +302,8 @@ if gameState == normalState then
 if  mouseTileID  <= world.width * world.height and world.chunks[world.viewedChunk].entitys[mouseTileID] ~= 0  then
 
   playerAct(world.viewedChunk,mouseTileID)
+  print(math.floor(px/world.width) + 1)
+  print(math.floor(py/world.height) + 1)
 end
 
 elseif gameState == invState then

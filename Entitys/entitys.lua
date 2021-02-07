@@ -26,7 +26,7 @@ entityProtos = {
     worldPos = 0,
     entityID = 99,
     health = 100,
-
+    popupIDs = {},
     inventory = {inventorySize = 63,contents = {}}
   },
   goblin = {
@@ -35,6 +35,7 @@ entityProtos = {
     worldPos = 0,
     entityID = 8,
     health = 100,
+    popupIDs = {},
     wants = {}
   },
   peasant = {
@@ -43,6 +44,7 @@ entityProtos = {
     worldPos = 0,
     entityID = 9,
     health = 100,
+    popupIDs = {},
     wants = {}
   }
 

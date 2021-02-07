@@ -14,18 +14,37 @@ function playerAct(actingOnChunk, actingOnEntity)
       damageEntity(actingOnChunk,actingOnEntity,world.chunks[world.viewedChunk].entitys[world.playerTile])
 
     elseif entity.name == "peasant" or entity.name == "goblin" then
+
+
+
+      x = math.floor(actingOnEntity % world.width )
+      y = math.floor(actingOnEntity % world.height)
+      if y == 0 then
+        y = world.height
+      end
+      print("y"..y)
+      if x == 0 then
+        x = world.width
+      end
+
+
       popup = {
-        graphics = {}
+        graphics = {},
+        x = x,
+        y = y
       }
-      print("Wants: ".. json.encode( entity.wants))
+
       for i = 1, table.maxn(entity.wants) do
-        json.encode("TTT" .. getItemByName(entity.wants[i].name))
-        table.insert(popup.graphics, getItemByName(entity.wants[i].name).graphic)
+        itemGID = getItemByName(entity.wants[i].itemName).id
+
+        table.insert(popup.graphics, itemGID)
+
       end
 
       table.insert(popups, popup)
-      print(json.encode(popups))
 
+      table.insert(entity.popupIDs, table.maxn(popups))
+print(json.encode(popups))
     end
   end
 end

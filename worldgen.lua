@@ -126,6 +126,8 @@ function genChunk2(x,y,id)
         tmpChunk.entitys[i] = deepcopy(entityProtos.peasant)
 
         table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("axe").name, amount = 1})
+        table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("tree").name, amount = 1})
+        table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("rock").name, amount = 1})
 
       end
       if n > 0.8995 then
