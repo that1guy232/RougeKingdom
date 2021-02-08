@@ -8,6 +8,7 @@ inventory = require "inventory"
 buttons = require "buttons"
 json = require "json"
 popup = require "popups"
+peasant = require "Entitys/peasant"
 
 
 
@@ -321,9 +322,8 @@ elseif gameState == invState then
 
         if py > by and py < by + bh and px > bx and px < bx + bw then
           tmpp = world.chunks[world.viewedChunk].entitys[world.playerTile]
-          if canCraft(tmpp.inventory.contents, item.ingredients) == true then
-            removeFromInventory(tmpp.inventory.contents,item.ingredients)
-            addToInventory(tmpp.inventory, item.name, item.amountMade)
+          if canCraft(tmpp.inventory.contents, item.ingredients,true) == true then
+            
             print("Can craft:".. item.name)
           else
             print("Can't craft:".. item.name)
@@ -461,6 +461,15 @@ end
 
 
 function updateChunk(chunkID)
+  chunk = world.chunks[chunkID]
+  for i = 1, table.maxn(chunk.entitys) do
+    if chunk.entitys[i] ~= 0 then
+      if chunk.entitys[i].name == "peasant" then
+        updatePeasant(chunk.entitys[i])
+      end
+    end
+  end
+
 end
 
 
@@ -487,6 +496,8 @@ function love.update(dt)
 
       end
     end
+
+    updatePopups()
 
 
     if table.maxn(world.actionque) > 0 then

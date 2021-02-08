@@ -123,18 +123,24 @@ function genChunk2(x,y,id)
 
     if tmpChunk.ground[i] ~= 0 then
       if n > 0.8990 then
-        tmpChunk.entitys[i] = deepcopy(entityProtos.peasant)
 
+        tmpChunk.entitys[i] = deepcopy(entityProtos.peasant)
         table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("axe").name, amount = 1})
         table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("tree").name, amount = 1})
-        table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("rock").name, amount = 1})
+        table.insert(tmpChunk.entitys[i].inventory.contents, {amount = 2,itemName = "rock"})
+        table.insert(tmpChunk.entitys[i].inventory.contents, {amount = 2,itemName = "tree"})
 
       end
       if n > 0.8995 then
+
         tmpChunk.entitys[i] = deepcopy(entityProtos.goblin)
-          table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("pickaxe").name, amount = 1})
+
+        table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("pickaxe").name, amount = 1})
+        table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("rock").name, amount = 1})
+
 
       end
+
       if  n > 0.90 then
         tmpChunk.entitys[i] = deepcopy(entityProtos.tree)
       end

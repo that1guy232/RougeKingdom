@@ -58,7 +58,7 @@ gameTiles = {
   {
     name = "player",
     id = 99,
-    graphic = love.graphics.newImage("gfx/painSteve.png"),
+    graphic = love.graphics.newImage("gfx/player.png"),
     Xoff   = 0,
     Yoff   = 0
   },

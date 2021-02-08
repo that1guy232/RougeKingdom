@@ -36,7 +36,8 @@ entityProtos = {
     entityID = 8,
     health = 100,
     popupIDs = {},
-    wants = {}
+    wants = {},
+    inventory = {inventorySize = 63,contents = {}}
   },
   peasant = {
     graphic = 10,
@@ -45,7 +46,8 @@ entityProtos = {
     entityID = 9,
     health = 100,
     popupIDs = {},
-    wants = {}
+    wants = {},
+    inventory = {inventorySize = 63,contents = {}}
   }
 
 }

@@ -57,25 +57,31 @@ function getItemByID(itemID)
   end
 end
 
-function canCraft(inventory,ingredients)
+function canCraft(inventory,ingredients,craft)
 
   amountOfMatches = 0
+  canCraftT = false
+
   for ingredientIndex=1,table.maxn(ingredients) do
-
-
 
     for inventoryIndex=1,table.maxn(inventory) do
 
-        if inventory[inventoryIndex] ~= 0 then
-          if ingredients[ingredientIndex].name == inventory[inventoryIndex].itemName then
+        if inventory.contents[inventoryIndex] ~= 0 then
+          print(json.encode(ingredients[ingredientIndex].name))
+          print(json.encode(inventory.contents[inventoryIndex].name))
+          if ingredients[ingredientIndex].name == inventory.contents[inventoryIndex].itemName then
 
 
-            if inventory[inventoryIndex].amount >= ingredients[ingredientIndex].amount then
+            if inventory.contents[inventoryIndex].amount >= ingredients[ingredientIndex].amount then
               amountOfMatches = amountOfMatches + 1
-
+              print(inventory.contents[inventoryIndex].amount)
               if amountOfMatches == table.maxn(ingredients) then
-                return  true
-
+                -- here
+                canCraftT = true
+                if craft then
+                  removeFromInventory(inventory.contents,ingredients)
+                  addToInventory(inventory, item.name, item.amountMade)
+                end
               end
 
             end
@@ -83,5 +89,5 @@ function canCraft(inventory,ingredients)
         end
     end
   end
-
+return  canCraftT
 end
