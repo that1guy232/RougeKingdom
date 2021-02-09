@@ -7,7 +7,7 @@ inventory = {
 }
 
 function removeFromInventory(inventory, items)
-  print(json.encode(inventory))
+
   amountOfMatches = 0
   tmpinv = inventory
 
@@ -184,6 +184,29 @@ function drawInventory()
 end
 
 
+
+function hasItem(inventory,itemName,amount)
+
+  if amount == nil then
+    amount = 1
+  end
+  totalAmount = 0
+
+  for i=1,table.maxn(inventory.contents) do
+
+    if inventory.contents[i].itemName == itemName then
+
+      totalAmount = totalAmount + inventory.contents[i].amount
+
+    end
+
+    if totalAmount >= amount then
+      return true
+    end
+  end
+  return false
+end
+
 function drawCraftingButton(craftingButton)
   drawButton(craftingButton.button)
   y = craftingButton.button.y
@@ -202,6 +225,4 @@ function drawCraftingButton(craftingButton)
     tmpX = tmpX + ii * 50
 
   end
-
-
 end

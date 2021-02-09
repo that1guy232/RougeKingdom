@@ -39,17 +39,18 @@ function playerAct(actingOnChunk, actingOnEntity)
         y = y
       }
 
-      for i = 1, table.maxn(entity.wants) do
-        itemGID = getItemByName(entity.wants[i].itemName).id
+      if table.maxn(entity.wants) > 0 then
+        for i = 1, table.maxn(entity.wants) do
+          itemGID = getItemByName(entity.wants[i].itemName).id
 
 
-        table.insert(popup.graphics, itemGID)
+          table.insert(popup.graphics, itemGID)
 
+        end
+
+        table.insert(popups, popup)
       end
 
-      table.insert(popups, popup)
-
-      table.insert(entity.popupIDs, table.maxn(popups))
 
     end
   end
