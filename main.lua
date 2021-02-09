@@ -12,6 +12,9 @@ peasant = require "Entitys/peasant"
 
 
 
+lovebird = require "lovebird"
+
+
 
 
 
@@ -323,7 +326,7 @@ elseif gameState == invState then
         if py > by and py < by + bh and px > bx and px < bx + bw then
           tmpp = world.chunks[world.viewedChunk].entitys[world.playerTile]
           if canCraft(tmpp.inventory.contents, item.ingredients,true) == true then
-            
+
             print("Can craft:".. item.name)
           else
             print("Can't craft:".. item.name)
@@ -477,6 +480,9 @@ end
 oldtick = 0
 rate = 1
 function love.update(dt)
+
+lovebird.update()
+
   newtick =  oldtick + (dt * rate)
 
   if newtick + oldtick > 0.3 then
