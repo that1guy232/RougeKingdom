@@ -128,7 +128,7 @@ function genChunk2(x,y,id)
         table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("axe").name, amount = 1})
         table.insert(tmpChunk.entitys[i].wants,{itemName = getItemByName("tree").name, amount = 1})
         table.insert(tmpChunk.entitys[i].inventory.contents, {amount = 2,itemName = "rock"})
-        table.insert(tmpChunk.entitys[i].inventory.contents, {amount = 2,itemName = "tree"})
+        table.insert(tmpChunk.entitys[i].inventory.contents, {amount = 3,itemName = "tree"})
 
       end
       if n > 0.8995 then
