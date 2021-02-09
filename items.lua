@@ -64,17 +64,16 @@ function canCraft(inventory,ingredients,craft)
 
   for ingredientIndex=1,table.maxn(ingredients) do
 
-    for inventoryIndex=1,table.maxn(inventory) do
+    for inventoryIndex=1,table.maxn(inventory.contents) do
 
         if inventory.contents[inventoryIndex] ~= 0 then
-          print(json.encode(ingredients[ingredientIndex].name))
-          print(json.encode(inventory.contents[inventoryIndex].name))
+
           if ingredients[ingredientIndex].name == inventory.contents[inventoryIndex].itemName then
 
 
             if inventory.contents[inventoryIndex].amount >= ingredients[ingredientIndex].amount then
               amountOfMatches = amountOfMatches + 1
-              print(inventory.contents[inventoryIndex].amount)
+
               if amountOfMatches == table.maxn(ingredients) then
                 -- here
                 canCraftT = true
