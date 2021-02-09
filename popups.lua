@@ -57,3 +57,35 @@ function updatePopups()
     end
   end
 end
+
+function createPopUp(x,y)
+  if y == 0 then
+    y = world.height
+  end
+
+  if x == 0 then
+    x = world.width
+  end
+
+
+  popup = {
+    graphics = {},
+    fadeStartTime = 20,
+    fadeTime = 20,
+    chunkID = world.viewedChunk,
+    x = x,
+    y = y
+  }
+
+  if table.maxn(entity.wants) > 0 then
+    for i = 1, table.maxn(entity.wants) do
+      itemGID = getItemByName(entity.wants[i].itemName).id
+
+
+      table.insert(popup.graphics, itemGID)
+
+    end
+
+    table.insert(popups, popup)
+  end
+end
