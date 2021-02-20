@@ -11,11 +11,13 @@ world = tiny.world()
 playerEnt = {
   x = 10,
   y = 10,
-  graphic = "99"
+  graphic = "99",
+  controlled = true
 }
 
 function love.load()
   tiny.addSystem(world,drawingSystem)
+  tiny.addSystem(world,playerControlSystem)
   tiny.addEntity(world,playerEnt)
   gamestate.registerEvents()
   gamestate.switch(playingState)
