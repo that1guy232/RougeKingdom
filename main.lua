@@ -7,18 +7,27 @@ playingStateLib = require "gameStates/playingState"
 SystemsLib = require "Entitys/Systems/Systems"
 world = tiny.world()
 
-
+DEBUG = true
 playerEnt = {
 
   pos = {x = 10, y = 10},
-  graphic = "99",
+  hitbox = {w = 25, h = 25},
+  graphic = 99,
   controlled = true
+}
+
+
+tmpTreeEnt = {
+  pos = {x = 50, y = 50},
+  hitbox = {w = 25, h = 25},
+  graphic = 6
 }
 
 function love.load()
   tiny.addSystem(world,drawingSystem)
   tiny.addSystem(world,playerControlSystem)
   tiny.addEntity(world,playerEnt)
+  tiny.addEntity(world,tmpTreeEnt)
   gamestate.registerEvents()
   gamestate.switch(playingState)
 
