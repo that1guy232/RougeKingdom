@@ -9,8 +9,8 @@ world = tiny.world()
 
 
 playerEnt = {
-  x = 10,
-  y = 10,
+
+  pos = {x = 10, y = 10},
   graphic = "99",
   controlled = true
 }
