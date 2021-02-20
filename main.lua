@@ -3,6 +3,7 @@ json        = require "libs/json"
 tiny        = require "libs/tiny"
 gamestate  = require "libs/gamestate"
 
+
 playingStateLib = require "gameStates/playingState"
 SystemsLib = require "Entitys/Systems/Systems"
 world = tiny.world()
@@ -24,10 +25,19 @@ tmpTreeEnt = {
 }
 
 function love.load()
+
+
   tiny.addSystem(world,drawingSystem)
   tiny.addSystem(world,playerControlSystem)
+
+
+
+
   tiny.addEntity(world,playerEnt)
   tiny.addEntity(world,tmpTreeEnt)
+
+
+
   gamestate.registerEvents()
   gamestate.switch(playingState)
 
@@ -35,6 +45,7 @@ end
 
 function love.draw()
   world:update(love.timer.getDelta())
+  print(tiny.getSystemCount(world))
 end
 
 
