@@ -1,5 +1,20 @@
+playerEnt = {
 
-
+  pos = {x = 10, y = 10},
+  vel = {x = 100,y = 100},
+  hitbox = {w = 25, h = 25},
+  graphic = 99,
+  damage = 5,
+  collieded = false,
+  controlled = true,
+  inventory = true
+}
+function playerEnt:onCollision(e)
+  if e.type == "resource" then
+    print("player collieded with resource: " .. e.name)
+    e.health = e.health - self.damage
+  end
+end
 
 
 function playerAct(actingOnChunk, actingOnEntity)

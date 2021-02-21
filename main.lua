@@ -6,38 +6,36 @@ gamestate  = require "libs/gamestate"
 
 playingStateLib = require "gameStates/playingState"
 SystemsLib = require "Entitys/Systems/Systems"
+
+playerLib = require "Entitys/player"
+treeLib = require "Entitys/tree"
 world = tiny.world()
 
+
+
+
 DEBUG = true
-playerEnt = {
-
-  pos = {x = 10, y = 10},
-  hitbox = {w = 25, h = 25},
-  graphic = 99,
-  controlled = true
-}
 
 
-tmpTreeEnt = {
-  pos = {x = 50, y = 50},
-  hitbox = {w = 25, h = 25},
-  graphic = 6
-}
 
 function love.load()
 
 
   tiny.addSystem(world,drawingSystem)
   tiny.addSystem(world,playerControlSystem)
-
+  tiny.addSystem(world,PhysSystem)
 
 
 
   tiny.addEntity(world,playerEnt)
-  tiny.addEntity(world,tmpTreeEnt)
 
 
-
+  tree1 =  deepcopy(TreeEnt)
+  tree2 = deepcopy(TreeEnt)
+  tree2.pos.x = 128
+  tree2.pos.y = 128
+  tiny.addEntity(world,tree1)
+  tiny.addEntity(world,tree2)
   gamestate.registerEvents()
   gamestate.switch(playingState)
 
@@ -45,7 +43,7 @@ end
 
 function love.draw()
   world:update(love.timer.getDelta())
-  print(tiny.getSystemCount(world))
+
 end
 
 
@@ -61,4 +59,25 @@ end
 function love.update(dt)
 
 
+end
+
+
+
+
+
+
+--Util function to copy a table. Move to Utils?
+function deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[deepcopy(orig_key)] = deepcopy(orig_value)
+        end
+        setmetatable(copy, deepcopy(getmetatable(orig)))
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
 end
