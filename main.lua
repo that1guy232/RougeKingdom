@@ -24,18 +24,15 @@ function love.load()
   tiny.addSystem(world,drawingSystem)
   tiny.addSystem(world,playerControlSystem)
   tiny.addSystem(world,PhysSystem)
+  tiny.addSystem(world,savingSystem)
 
-
-
+  tree1 = deepcopy(Tree)
+  tiny.addEntity(world,tree1)
   tiny.addEntity(world,playerEnt)
 
+  print(json.encode(playerEnt:export()))
+  print(json.encode(tree1:export()))
 
-  tree1 =  deepcopy(TreeEnt)
-  tree2 = deepcopy(TreeEnt)
-  tree2.pos.x = 128
-  tree2.pos.y = 128
-  tiny.addEntity(world,tree1)
-  tiny.addEntity(world,tree2)
   gamestate.registerEvents()
   gamestate.switch(playingState)
 
