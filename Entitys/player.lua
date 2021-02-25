@@ -45,3 +45,8 @@ function playerAct(actingOnChunk, actingOnEntity)
     end
   end
 end
+
+function playerEnt:export()
+
+  return { _type = "playerEnt", pos = self.pos, controlled = self.controlled, inventory = self.inventory }
+end
