@@ -7,12 +7,19 @@ playerEnt = {
   damage = 5,
   collieded = false,
   controlled = true,
-  inventory = true
+  inventory = {
+
+  }
 }
+
 function playerEnt:onCollision(e)
   if e.type == "resource" then
     print("player collieded with resource: " .. e.name)
     e.health = e.health - self.damage
+    if e.health <= 0 then
+      e:die(self)
+      inventorySystem:addItem(self,"tree",1)
+    end
   end
 end
 

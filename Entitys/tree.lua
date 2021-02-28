@@ -12,16 +12,21 @@ Tree = {
 
 
 
+function Tree:die(e)
+
+
+  if e.inventory then
+    print("inv")
+
+    tiny.remove(world,self)
+
+  end
+end
 
 
 function Tree:onCollision(e)
-  if self.health <= 0 then
-    world.remove(world, self)
-    if e.inventory then
-      print("e has inventory")
 
-    end
-  end
+
 end
 
 function Tree:export()

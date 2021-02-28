@@ -7,10 +7,13 @@ gamestate  = require "libs/gamestate"
 playingStateLib = require "gameStates/playingState"
 SystemsLib = require "Entitys/Systems/Systems"
 
+
 playerLib = require "Entitys/player"
 treeLib = require "Entitys/tree"
 world = tiny.world()
 
+--oldcode libs rework
+itemLib = require "items"
 
 
 
@@ -26,12 +29,14 @@ function love.load()
   tiny.addSystem(world,PhysSystem)
   tiny.addSystem(world,savingSystem)
 
+
   tree1 = deepcopy(Tree)
   tiny.addEntity(world,tree1)
+  playerEnt.inventory = inventorySystem:createInventory(1,{})
   tiny.addEntity(world,playerEnt)
 
-  print(json.encode(playerEnt:export()))
   print(json.encode(tree1:export()))
+  print(json.encode(playerEnt:export()))
 
   gamestate.registerEvents()
   gamestate.switch(playingState)
