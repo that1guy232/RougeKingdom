@@ -1,4 +1,4 @@
-inventorySystem = tiny.processingSystem()
+inventorySystem = tiny.system()
 inventorySystem.filter = tiny.requireAll("inventory")
 
 
