@@ -1,5 +1,5 @@
 playerEnt = {
-
+  name = "player",
   pos = {x = 10, y = 10},
   vel = {x = 100,y = 100},
   hitbox = {w = 25, h = 25},
@@ -18,7 +18,9 @@ function playerEnt:onCollision(e)
     e.health = e.health - self.damage
     if e.health <= 0 then
       e:die(self)
-      inventorySystem:addItem(self,"tree",1)
+
+
+      print(json.encode(self:export()))
     end
   end
 end

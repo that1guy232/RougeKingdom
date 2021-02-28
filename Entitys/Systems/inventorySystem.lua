@@ -5,25 +5,62 @@ inventorySystem.filter = tiny.requireAll("inventory")
 
 
 function inventorySystem:addItem(e, itemName, amount)
-  print(e.pos.x)
-  local inventory =  e.inventory
-
-
-  for i = 1, inventory.size do
-    itemInSlot = inventory.contents[i]
-    print(itemName)
+    print(amount)
+  for i = 1, e.inventory.size do
+    itemInSlot = e.inventory.contents[i]
     itemMaxStack = getItemByName(itemName).maxstack
 
 
+    if itemInSlot ~= nil then
+        if itemInSlot.itemName == itemName then
+          if itemInSlot.amount ~= itemMaxStack then
+
+            totalAmount = itemInSlot.amount + amount
+            if totalAmount <= itemMaxStack then
+              itemInSlot.amount = totalAmount
+            elseif totalAmount >= itemMaxStack then
+              remainder = totalAmount - itemMaxStack
+              itemInSlot.amount = itemMaxStack
+
+              inventorySystem:addItem(e,itemName,remainder)
+              break
+            end
+          end
+
+
+
+
+        end
+
+    else
+
+      itemInSlot = {
+        amount = 0,
+        itemName = itemName
+      }
+
+      e.inventory.contents[i] = itemInSlot
+      totalAmount = itemInSlot.amount + amount
+
+      if totalAmount >= itemMaxStack then
+
+        remainder = totalAmount - itemMaxStack
+        itemInSlot.amount = itemMaxStack
+        inventorySystem:addItem(e,itemName,remainder)
+        break
+
+      else
+        itemInSlot.amount = totalAmount
+        break
+
+      end
+    end
+
   end
 
-
-  return true
 end
 
-function inventorySystem:export()
-  return {_type  = "inventory", size = self.size, contents = self.contents}
-end
+
 
 function inventorySystem:createInventory(size,contents)
 

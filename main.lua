@@ -31,12 +31,15 @@ function love.load()
 
 
   tree1 = deepcopy(Tree)
+  tree2 = deepcopy(Tree)
+  tree2.pos.y = 90
+  tiny.addEntity(world,tree2)
   tiny.addEntity(world,tree1)
-  playerEnt.inventory = inventorySystem:createInventory(1,{})
+  playerEnt.inventory = inventorySystem:createInventory(7*9,{})
   tiny.addEntity(world,playerEnt)
 
-  print(json.encode(tree1:export()))
-  print(json.encode(playerEnt:export()))
+  print("tree1: " ..json.encode(tree1:export()))
+  print("Player: " ..json.encode(playerEnt:export()))
 
   gamestate.registerEvents()
   gamestate.switch(playingState)

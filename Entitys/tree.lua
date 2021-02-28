@@ -13,21 +13,13 @@ Tree = {
 
 
 function Tree:die(e)
-
-
   if e.inventory then
-    print("inv")
-
     tiny.remove(world,self)
-
+    inventorySystem:addItem(e,"tree",21)
   end
 end
 
 
-function Tree:onCollision(e)
-
-
-end
 
 function Tree:export()
   return {
