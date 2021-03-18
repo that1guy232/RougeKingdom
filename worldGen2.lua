@@ -1,35 +1,47 @@
 --tmp world init
-function worldInit(width,height)
+local waterdepth = 0;
+function worldInit(width,height,waterdepth)
 
   local map = {}
 
+
   local start = love.timer.getTime()
-  map = genHeightMap(w,h)
+  map.heightMap = genHeightMap(w,h)
 
+  map.data = {}
 
+  map.waterpools = {}
+  map.data.waterdepth = waterdepth
+  map.data.width = width
+  map.data.height = height
 
 
   for i = 1, 7 do
     print("SmoothPass #" .. i)
-    map = smoothHeightMap(map, w, h)
+    map.heightMap  = smoothHeightMap(map.heightMap , w, h)
   end
 
   smallest = 1000
-  biggest = 0
 
-  for i = 1, #map do
-    if map[i].col < smallest then
-      smallest = map[i].col
+
+  for i = 1, #map.heightMap do
+    if map.heightMap[i].col < smallest then
+      smallest = map.heightMap[i].col
     end
   end
 
-  for i = 1, #map do
-    map[i].col = map[i].col  - smallest
-    if map[i].col/100  > 1 then
-      subamount = map[i].col - 100
-      map[i].col = map[i].col - subamount
+
+
+  for i = 1, #map.heightMap do
+    map.heightMap[i].col = map.heightMap[i].col  - smallest
+    if map.heightMap[i].col/100  > 1 then
+      subamount = map.heightMap[i].col - 100
+      map.heightMap[i].col = map.heightMap[i].col - subamount
+    end
+
   end
-  end
+
+  map = genWaterBiome(map)
 
   local result = love.timer.getTime() - start
   print( string.format( "It took %.3f milliseconds ", result * 1000 ))
@@ -47,8 +59,11 @@ function genHeightMap(width,height)
       tmpTile = {}
       tmpTile.x = w
       tmpTile.y = h
+      tmpTile.index = #map + 1
       tmpTile.col = love.math.random(0,100)
+
       table.insert(map,tmpTile)
+
     end
 
   end
@@ -80,7 +95,7 @@ end
 
 
 
-function getTilesAroundTile(tiles, tile,width,height)
+function getTilesAroundTile(tiles, tile,width)
 
   local aroundTiles = {}
 
@@ -101,5 +116,79 @@ function getTilesAroundTile(tiles, tile,width,height)
   table.insert(aroundTiles, tiles[DL])
   table.insert(aroundTiles, tiles[D])
   table.insert(aroundTiles, tiles[DR])
+
   return aroundTiles
+
+end
+
+
+
+
+function genWaterBiome (map)
+  print("Making water biome")
+  local map = map
+  nWaterPoolID = 1
+
+
+  --give each water it's own ID
+  for i = 1, #map.heightMap do
+    if map.heightMap[i].col < map.data.waterdepth then
+      map.heightMap[i].WPID = nWaterPoolID
+      nWaterPoolID = nWaterPoolID + 1
+    end
+  end
+
+--Reduces id's to lowest connecting ones
+print("water biome")
+for s = 1, 40 do
+  for i = 1, #map.heightMap do
+    if map.heightMap[i].WPID then
+      local aroundTiles = getTilesAroundTile(map.heightMap,i,map.data.width)
+
+        for ii = 1, #aroundTiles do
+          if aroundTiles[ii].WPID then
+            if map.heightMap[i].WPID < aroundTiles[ii].WPID then
+              map.heightMap[aroundTiles[ii].index].WPID = map.heightMap[i].WPID
+            elseif map.heightMap[i].WPID > aroundTiles[ii].WPID then
+              map.heightMap[i].WPID = aroundTiles[ii].WPID
+            end
+          end
+        end
+    end
+  end
+end
+
+--making waterpool id's start at 1
+
+wpidCount = {}
+for t = 1, 5 do
+for i = 1, #map.heightMap do
+    if map.heightMap[i].WPID then
+      if not wpidCount[1] then
+        print("sd")
+        table.insert(wpidCount,map.heightMap[i].WPID)
+      end
+      contained = false
+      for ii = 1, #wpidCount do
+
+        if map.heightMap[i].WPID == wpidCount[ii] then
+          contained = true
+        end
+      end
+      if not contained then
+        table.insert(wpidCount,map.heightMap[i].WPID)
+      end
+
+
+    end
+end
+end
+print(json.encode(wpidCount))
+
+
+
+
+map.waterPoolIds = wpidCount
+return  map
+
 end

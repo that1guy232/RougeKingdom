@@ -24,56 +24,67 @@ DEBUG = true
 local map
 
 
-
+local waterdepth = 40
 function love.load()
-  w = 1000
-  h = 1000
+
+  w = 100
+  h = 100
+
   --tmp height map
-  map = worldInit(w,h)
+  map = worldInit(w,h,waterdepth)
 
---  tiny.addSystem(world,drawingSystem)
---  tiny.addSystem(world,playerControlSystem)
---  tiny.addSystem(world,PhysSystem)
---  tiny.addSystem(world,savingSystem)
+  tiny.addSystem(world,drawingSystem)
+  tiny.addSystem(world,playerControlSystem)
+  tiny.addSystem(world,PhysSystem)
+  tiny.addSystem(world,savingSystem)
 
 
---  tree1 = deepcopy(Tree)
---  tree2 = deepcopy(Tree)
---  tree2.pos.y = 90
---  tiny.addEntity(world,tree2)
---  tiny.addEntity(world,tree1)
---  playerEnt.inventory = inventorySystem:createInventory(7*9,{})
---  tiny.addEntity(world,playerEnt)
+  tree1 = deepcopy(Tree)
+  tree2 = deepcopy(Tree)
+  tree2.pos.y = 90
+  tiny.addEntity(world,tree2)
+  tiny.addEntity(world,tree1)
+  playerEnt.inventory = inventorySystem:createInventory(7*9,{})
+  tiny.addEntity(world,playerEnt)
 
 --  print("Player: " ..json.encode(playerEnt:export()))
 --  print("tree1: " ..json.encode(tree1:export()))
 
---  gamestate.registerEvents()
---  gamestate.switch(playingState)
+  gamestate.registerEvents()
+  gamestate.switch(playingState)
 
 end
-tileSize = 1
+
+
+tileSize = 25
+water = love.graphics.newImage("gfx/water.png")
+grass = love.graphics.newImage("gfx/grs1.png")
+psel = 1
 
 
 function love.draw()
---tmp height map drawing
 
-  for testS = 1, #map do
-    col = map[testS].col
-    x = map[testS].x
-    y = map[testS].y
-    if col < 40 then
-      love.graphics.setColor(0, 0, 1, 1)
+
+
+--tmp height map drawing
+  for testS = 1, #map.heightMap do
+
+    if map.heightMap[testS].col < waterdepth then
+      love.graphics.draw(water, map.heightMap[testS].x * tileSize, map.heightMap[testS].y * tileSize)
     else
-      love.graphics.setColor(col/100, col/100, col/100, 1)
+      love.graphics.draw(grass, map.heightMap[testS].x * tileSize, map.heightMap[testS].y * tileSize)
     end
 
-    love.graphics.rectangle("fill", x*tileSize, y*tileSize, tileSize, tileSize)
+
+
+
+
   end
 
 
 
-  world:update(love.timer.getDelta())
+
+world:update(love.timer.getDelta())
 end
 
 
