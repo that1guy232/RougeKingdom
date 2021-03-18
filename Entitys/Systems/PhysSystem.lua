@@ -11,8 +11,7 @@ local function collides(e1, e2)
 end
 
 function PhysSystem:process(e,dt)
-  e.vel.x = 100
-  e.vel.y = 100
+
   e.collieded = false
   local es = self.entities
   for i, e2 in ipairs(es) do
@@ -20,9 +19,11 @@ function PhysSystem:process(e,dt)
       if collides(e,e2) then
         if e.onCollision then
           e.collieded = true
+          tmpV = deepcopy(e.vel)
           e.vel.x = 0
           e.vel.y = 0
           e:onCollision(e2)
+          e.vel = tmpV
         end
       end
     end
