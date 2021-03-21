@@ -15,7 +15,7 @@ Tree = {
 function Tree:die(e)
   if e.inventory then
     tiny.remove(world,self)
-    inventorySystem:addItem(e,"tree",21)
+    inventorySystem:addItem(e,"tree",1)
   end
 end
 

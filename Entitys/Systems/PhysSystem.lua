@@ -3,6 +3,7 @@ PhysSystem.filter =  tiny.requireAll("hitbox","pos")
 
 
 local function collides(e1, e2)
+
     return
         e1.pos.x + e1.hitbox.w >= e2.pos.x and
         e1.pos.y + e1.hitbox.h >= e2.pos.y and
@@ -12,18 +13,24 @@ end
 
 function PhysSystem:process(e,dt)
 
+  
   e.collieded = false
+
   local es = self.entities
+
   for i, e2 in ipairs(es) do
+
     if e ~= e2 then
+
       if collides(e,e2) then
-        if e.onCollision then
+
+        if e.onCollision and not e2.camera then
+
           e.collieded = true
-          tmpV = deepcopy(e.vel)
-          e.vel.x = 0
-          e.vel.y = 0
-          e:onCollision(e2)
-          e.vel = tmpV
+
+
+            e:onCollision(e2)
+
         end
       end
     end
