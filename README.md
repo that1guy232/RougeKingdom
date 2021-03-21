@@ -32,8 +32,12 @@ NPC's with a "want's" system.
 
 Some kind of faction system this way I can start working on towns/village system that can fight each other.
 
-A area would have to be tagged owned by X faction 
+A area would have to be tagged owned by X faction
+
   Who runs the faction?
+
   How does a faction get created?
+
   Do faction's have wants?
+  
 There is a lot to answer here and a lot to think about.
