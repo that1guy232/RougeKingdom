@@ -42,14 +42,16 @@ function love.load()
   tiny.addSystem(world,playerControlSystem)
   tiny.addSystem(world,savingSystem)
   tiny.addSystem(world,PhysSystem)
-
+  tiny.addSystem(world,inventorySystem)
   camera = deepcopy(cameraEnt)
 
   camera.map = map
-
+  playerEnt.pos.x = 100
+  playerEnt.pos.y = 100
   camera.pos = deepcopy(playerEnt.pos)
   cw, ch = love.graphics.getDimensions()
   camera.hitbox = {w = cw, h = ch}
+
 
   tree1 = deepcopy(Tree)
   tree2 = deepcopy(Tree)
@@ -59,7 +61,7 @@ function love.load()
   tiny.addEntity(world,tree3)
   tiny.addEntity(world,tree2)
   tiny.addEntity(world,tree1)
-  playerEnt.inventory = inventorySystem:createInventory(7*9,{})
+  playerEnt.inventory = inventorySystem:createInventory(5,5,{})
   tiny.addEntity(world,playerEnt)
   tiny.addEntity(world,camera)
 
@@ -93,6 +95,7 @@ world:update(love.timer.getDelta())
 
 love.graphics.print(love.timer.getFPS())
 love.graphics.print("PlayerPos: ".. json.encode(playerEnt.pos),0,25)
+
 end
 
 
