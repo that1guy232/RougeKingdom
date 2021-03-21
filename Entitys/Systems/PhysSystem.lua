@@ -26,9 +26,7 @@ function PhysSystem:process(e,dt)
 
         if e.onCollision and not e2.camera then
 
-          e.collieded = true
-
-
+            e.collieded = true
             e:onCollision(e2)
 
         end

@@ -7,6 +7,7 @@ function CameraSystem:process(e,dt)
 
 
 
+
   local w = e.hitbox.w
   local h = e.hitbox.h
   local widthinTile = e.hitbox.w / 25
@@ -35,9 +36,9 @@ function CameraSystem:process(e,dt)
       if  e.map.heightMap[newIndex] and newIndex > 0 then
 
         if e.map.heightMap[newIndex].col < 40 then
-          love.graphics.draw(water, (tmpx * 25) + w/2, (tmpy * 25) + h/2 )
+          love.graphics.draw(water, (e.map.heightMap[newIndex].x * 25) - e.pos.x , (e.map.heightMap[newIndex].y * 25) -e.pos.y )
         else
-          love.graphics.draw(grass, (tmpx * 25) + w/2, (tmpy * 25) + h/2)
+          love.graphics.draw(grass,  (e.map.heightMap[newIndex].x * 25) - e.pos.x , (e.map.heightMap[newIndex].y * 25) -e.pos.y )
         end
 
       end
@@ -53,12 +54,18 @@ function CameraSystem:process(e,dt)
 
     if #e.drawableSprites > 0 then
       for s = 1, #e.drawableSprites do
-
+        --hacker to keep camera on player
+        if e.drawableSprites[s].name == "player" then
+          camera.pos.x = e.drawableSprites[s].pos.x
+          camera.pos.y = e.drawableSprites[s].pos.y
+          camera.pos.x = camera.pos.x - w/2
+          camera.pos.y = camera.pos.y - h/2
+        end
 
         local sprite = getTileById(e.drawableSprites[s].graphic)
         local entX = e.drawableSprites[s].pos.x
         local entY = e.drawableSprites[s].pos.y
-        love.graphics.draw(sprite.graphic,entX - e.pos.x + w/2,entY - e.pos.y + h/2)
+        love.graphics.draw(sprite.graphic,entX - e.pos.x ,entY - e.pos.y)
 
 
 

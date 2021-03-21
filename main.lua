@@ -47,7 +47,7 @@ function love.load()
 
   camera.map = map
 
-  camera.pos = playerEnt.pos
+  camera.pos = deepcopy(playerEnt.pos)
   cw, ch = love.graphics.getDimensions()
   camera.hitbox = {w = cw, h = ch}
 
