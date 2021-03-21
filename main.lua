@@ -11,6 +11,7 @@ worldGen = require "worldGen2"
 
 playerLib = require "Entitys/player"
 treeLib = require "Entitys/tree"
+cameraLib =  require "Entitys/camera"
 world = tiny.world()
 
 --oldcode libs rework
@@ -27,25 +28,40 @@ local map
 local waterdepth = 40
 function love.load()
 
-  w = 100
-  h = 100
 
+
+
+  w = 1000
+  h = 1000
   --tmp height map
+  --Make the map a Entity
   map = worldInit(w,h,waterdepth)
 
-  tiny.addSystem(world,drawingSystem)
+  tiny.addSystem(world,CameraSystem)
+  --tiny.addSystem(world,drawingSystem)
   tiny.addSystem(world,playerControlSystem)
-  tiny.addSystem(world,PhysSystem)
   tiny.addSystem(world,savingSystem)
+  tiny.addSystem(world,PhysSystem)
 
+  camera = deepcopy(cameraEnt)
+
+  camera.map = map
+
+  camera.pos = playerEnt.pos
+  cw, ch = love.graphics.getDimensions()
+  camera.hitbox = {w = cw, h = ch}
 
   tree1 = deepcopy(Tree)
   tree2 = deepcopy(Tree)
+  tree3 = deepcopy(Tree)
   tree2.pos.y = 90
+  tree3.pos = {x = 500, y = 250}
+  tiny.addEntity(world,tree3)
   tiny.addEntity(world,tree2)
   tiny.addEntity(world,tree1)
   playerEnt.inventory = inventorySystem:createInventory(7*9,{})
   tiny.addEntity(world,playerEnt)
+  tiny.addEntity(world,camera)
 
 --  print("Player: " ..json.encode(playerEnt:export()))
 --  print("tree1: " ..json.encode(tree1:export()))
@@ -67,24 +83,16 @@ function love.draw()
 
 
 --tmp height map drawing
-  for testS = 1, #map.heightMap do
 
-    if map.heightMap[testS].col < waterdepth then
-      love.graphics.draw(water, map.heightMap[testS].x * tileSize, map.heightMap[testS].y * tileSize)
-    else
-      love.graphics.draw(grass, map.heightMap[testS].x * tileSize, map.heightMap[testS].y * tileSize)
-    end
-
-
-
-
-
-  end
 
 
 
 
 world:update(love.timer.getDelta())
+
+
+love.graphics.print(love.timer.getFPS())
+love.graphics.print("PlayerPos: ".. json.encode(playerEnt.pos),0,25)
 end
 
 
