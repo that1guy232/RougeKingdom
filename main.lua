@@ -11,6 +11,7 @@ worldGen = require "worldGen2"
 
 playerLib = require "Entitys/player"
 treeLib = require "Entitys/tree"
+rockLib = require "Entitys/rock"
 cameraLib =  require "Entitys/camera"
 world = tiny.world()
 
@@ -56,11 +57,16 @@ function love.load()
   tree1 = deepcopy(Tree)
   tree2 = deepcopy(Tree)
   tree3 = deepcopy(Tree)
+  rock1 = deepcopy(Rock)
+
+  rock1.pos.x = 310
+  rock1.pos.y = 340
   tree2.pos.y = 90
   tree3.pos = {x = 500, y = 250}
   tiny.addEntity(world,tree3)
   tiny.addEntity(world,tree2)
   tiny.addEntity(world,tree1)
+  tiny.addEntity(world,rock1)
   playerEnt.inventory = inventorySystem:createInventory(5,5,{})
   tiny.addEntity(world,playerEnt)
   tiny.addEntity(world,camera)
