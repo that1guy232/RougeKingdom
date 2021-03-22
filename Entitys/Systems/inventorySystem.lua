@@ -1,13 +1,59 @@
 inventorySystem = tiny.processingSystem()
 inventorySystem.filter = tiny.requireAll("inventory")
 
+  local mouseDX = 0
+  local mouseDY = 0
+
 function inventorySystem:process(e,dt)
+
   if e.inventory.visable then
+
+
+
+
     local inventoryCorner = getTileByName("inventoryCorner").graphic
     local inventoryTop = getTileByName("inventoryTop").graphic
     local inventoryTile = getTileByName("inventoryTile").graphic
     local closeButton = getTileByName("closeButton").graphic
-    --27 is the size of the inventory tiles I should unhard code this because this is just really poor. 
+
+
+    if love.mouse.isDown(1) then
+      local mouseX = love.mouse.getX()
+      local mouseY = love.mouse.getY()
+
+
+      --Bounds for the top bar
+        if mouseX > e.inventory.pos.x + 27
+          and mouseX < 27 + e.inventory.pos.x + e.inventory.width*27
+          and  mouseY > e.inventory.pos.y
+          and mouseY < e.inventory.pos.y + 27 then
+            e.inventory.moving = true
+        end
+
+      --Bounds for the close button 15 is offset of close button, 23 is the width of the sprite
+      if mouseX > e.inventory.pos.x + 15
+        and mouseX < e.inventory.pos.x + 15 + 23
+        and mouseY < e.inventory.pos.y + 2
+        and mouseY > e.inventory.pos.y - 12 then
+        e.inventory.visable = false
+      end
+
+    else
+      e.inventory.moving = false
+    end
+
+
+    if e.inventory.moving then
+      function love.mousemoved(x, y, dx, dy)
+        if love.mouse.isDown(1) then
+          e.inventory.pos.x = e.inventory.pos.x + dx
+          e.inventory.pos.y = e.inventory.pos.y + dy
+        end
+      end
+    end
+
+
+    --27 is the size of the inventory tiles I should unhard code this because this is just really poor.
     love.graphics.draw(inventoryCorner, e.inventory.pos.x+27*2 ,e.inventory.pos.y,0,-1,1)
     love.graphics.draw(inventoryCorner, e.inventory.pos.x + e.inventory.width  * 27,e.inventory.pos.y)
     for x = 2,  e.inventory.width - 1 do
@@ -24,8 +70,10 @@ function inventorySystem:process(e,dt)
 
     love.graphics.print({{120/255, 255/255, 12/255},e.name},e.inventory.pos.x+30,e.inventory.pos.y+2,0,0.8,0.8)
 
-
   end
+
+
+
 end
 
 
