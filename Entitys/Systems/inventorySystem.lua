@@ -56,13 +56,26 @@ function inventorySystem:process(e,dt)
     --27 is the size of the inventory tiles I should unhard code this because this is just really poor.
     love.graphics.draw(inventoryCorner, e.inventory.pos.x+27*2 ,e.inventory.pos.y,0,-1,1)
     love.graphics.draw(inventoryCorner, e.inventory.pos.x + e.inventory.width  * 27,e.inventory.pos.y)
+
     for x = 2,  e.inventory.width - 1 do
-      love.graphics.draw(inventoryTop, e.inventory.pos.x + 27 * x, e.inventory.pos.y)
+      love.graphics.draw(inventoryTop, e.inventory.pos.x + 27 * x, e.inventory.pos.y )
     end
-    local Offset = -12
+
+    local Offset = -16
+
     for y = 1,  e.inventory.height do
       for x = 1,  e.inventory.width do
-        love.graphics.draw(inventoryTile, e.inventory.pos.x + 27 * x, Offset + e.inventory.pos.y + 27 * y, r, sx, sy, ox, oy, kx, ky)
+        love.graphics.draw(inventoryTile, e.inventory.pos.x + 27 * x, Offset + e.inventory.pos.y + 27 * y)
+          local tileIndex = x + y  * e.inventory.width - 5
+          print(json.encode(e.inventory.contents))
+          if e.inventory.contents[tileIndex]  then
+            local item = getItemByName(e.inventory.contents[tileIndex].itemName)
+            love.graphics.draw(item.graphic, e.inventory.pos.x + 27 * x, 8 + Offset + e.inventory.pos.y + 27 * y )
+            love.graphics.print(e.inventory.contents[tileIndex].amount, e.inventory.pos.x + 27 * x, 3 + Offset + e.inventory.pos.y + 27 * y )
+
+
+          end
+
       end
     end
 
@@ -80,8 +93,8 @@ end
 function inventorySystem:addItem(e, itemName, amount)
     print(amount)
   for i = 1, e.inventory.size do
-    itemInSlot = e.inventory.contents[i]
-    itemMaxStack = getItemByName(itemName).maxstack
+    local itemInSlot = e.inventory.contents[i]
+    local itemMaxStack = getItemByName(itemName).maxstack
 
 
     if itemInSlot ~= nil then
@@ -91,6 +104,7 @@ function inventorySystem:addItem(e, itemName, amount)
             totalAmount = itemInSlot.amount + amount
             if totalAmount <= itemMaxStack then
               itemInSlot.amount = totalAmount
+              break
             elseif totalAmount >= itemMaxStack then
               remainder = totalAmount - itemMaxStack
               itemInSlot.amount = itemMaxStack
