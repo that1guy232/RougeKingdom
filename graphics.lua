@@ -124,6 +124,13 @@ gameTiles = {
           graphic = love.graphics.newImage("gfx/UI/exit.png"),
           Xoff = 0,
           Yoff = 0
+      },
+      {
+        name = "closeButton",
+        id = 16,
+        graphic = love.graphics.newImage("gfx/Buildings/woodCuttersHut.png"),
+        Xoff = 0,
+        Yoff = 0
       }
 
 
