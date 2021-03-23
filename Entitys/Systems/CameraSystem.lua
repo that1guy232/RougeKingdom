@@ -33,12 +33,12 @@ function CameraSystem:process(e,dt)
 
 
 
-      if  e.map.heightMap[newIndex] and newIndex > 0 then
+      if  e.map.groundMap[newIndex] and newIndex > 0 then
 
-        if e.map.heightMap[newIndex].col < 40 then
-          love.graphics.draw(water, (e.map.heightMap[newIndex].x * 25) - e.pos.x , (e.map.heightMap[newIndex].y * 25) -e.pos.y )
+        if e.map.groundMap[newIndex].col < 40 then
+          love.graphics.draw(water, (e.map.groundMap[newIndex].x * 25) - e.pos.x , (e.map.groundMap[newIndex].y * 25) -e.pos.y )
         else
-          love.graphics.draw(grass,  (e.map.heightMap[newIndex].x * 25) - e.pos.x , (e.map.heightMap[newIndex].y * 25) -e.pos.y )
+          love.graphics.draw(grass,  (e.map.groundMap[newIndex].x * 25) - e.pos.x , (e.map.groundMap[newIndex].y * 25) -e.pos.y )
         end
 
       end
