@@ -85,18 +85,55 @@ gameTiles = {
   },
   {
       name = "speechBubbleM",
-      id = 11,
+      id = 12,
       graphic = love.graphics.newImage("gfx/speech/speechm.png"),
       Xoff = 0,
       Yoff = 0
     },
     {
         name = "speechBubbleL",
-        id = 11,
+        id = 13,
         graphic = love.graphics.newImage("gfx/speech/speechl.png"),
         Xoff = 0,
         Yoff = 0
-    }
+    },
+    {
+      name = "inventoryTop",
+      id = 14,
+      graphic = love.graphics.newImage("gfx/Inventory/InventoryTopLength.png"),
+      Xoff = 0,
+      Yoff = 0
+    },
+    {
+        name = "inventoryCorner",
+        id = 15,
+        graphic = love.graphics.newImage("gfx/Inventory/inventoryCorner.png"),
+        Xoff = 0,
+        Yoff = 0
+      },
+      {
+          name = "inventoryTile",
+          id = 16,
+          graphic = love.graphics.newImage("gfx/Inventory/inventoryTile.png"),
+          Xoff = 0,
+          Yoff = 0
+      },
+      {
+          name = "closeButton",
+          id = 16,
+          graphic = love.graphics.newImage("gfx/UI/exit.png"),
+          Xoff = 0,
+          Yoff = 0
+      },
+      {
+        name = "closeButton",
+        id = 16,
+        graphic = love.graphics.newImage("gfx/Buildings/woodCuttersHut.png"),
+        Xoff = 0,
+        Yoff = 0
+      }
+
+
 }
 
 
@@ -111,6 +148,7 @@ end
 function  getTileById(id)
   for i = 1, table.maxn(gameTiles) do
     if gameTiles[i].id == id then
+
       return gameTiles[i]
     end
   end
