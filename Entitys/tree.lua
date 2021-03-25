@@ -13,8 +13,11 @@ Tree = {
 
 
 function Tree:die(e)
+
   if e.inventory then
+
     tiny.remove(world,self)
+    self.markdead  = true
     inventorySystem:addItem(e,"tree",1)
   end
 end

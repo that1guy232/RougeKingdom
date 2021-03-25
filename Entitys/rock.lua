@@ -15,6 +15,7 @@ Rock = {
 function Rock:die(e)
   if e.inventory then
     tiny.remove(world,self)
+    self.markdead  = true
     inventorySystem:addItem(e,"rock",1)
   end
 end
