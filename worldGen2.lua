@@ -5,7 +5,7 @@ function worldInit(width,height,waterdepth)
   local map = {}
 
 
-  local start = love.timer.getTime()
+
   map.groundMap = genHeightMap(w,h)
 
   map.data = {}
@@ -27,50 +27,57 @@ function worldInit(width,height,waterdepth)
 
 
   local resourceMap = genHeightMap(w,h)
-  resourceMap  = smoothHeightMap(resourceMap , w, h)
+
+  resourceMap = normalizeMap(resourceMap)
+
+
+  map.groundMap = normalizeMap(map.groundMap)
 
 
 
 
 
-  smallest = 1000
+  map = genBiomes(map)
 
 
-  for i = 1, #map.groundMap do
-    if map.groundMap[i].col < smallest then
-      smallest = map.groundMap[i].col
-    end
-  end
-
-
-
-  for i = 1, #map.groundMap do
-    map.groundMap[i].col = map.groundMap[i].col  - smallest
-    if map.groundMap[i].col/100  > 1 then
-      subamount = map.groundMap[i].col - 100
-      map.groundMap[i].col = map.groundMap[i].col - subamount
-    end
-
-  end
-
-
-
-  map.waterPoolIds = genBiomes(map)
+print("resourceMap: " .. #resourceMap)
+print("groundMap: " .. #map.groundMap)
 
   --Genning resources.
-  print("Genning resources")
+  local entx = 0
+  local enty = 0
+  print("Genning resources" )
   for i = 1, #resourceMap do
-    if i > 40 then
-      if not map.groundMap[i].BID then
-        mapo
+    if   resourceMap[i].col < 10 then
+      if  map.groundMap[i].col > 45 then
+
+        local entSelect = love.math.random(1,2)
+        local tmpent
+        if entSelect == 1 then
+           tmpent = deepcopy(Rock)
+        elseif entSelect == 2 then
+           tmpent = deepcopy(Tree)
+        end
+
+        local entx = (resourceMap[i].x * 25)
+        local enty = ( 1 + resourceMap[i].y * 25)
+
+
+        tmpent.pos =  {x = entx, y = enty}
+
+      
+
+        table.insert(map.entites,deepcopy(tmpent))
       end
     end
+
+
+
+    entx = entx + 1
+
   end
 
 
-
-  local result = love.timer.getTime() - start
-  print( string.format( "It took %.3f milliseconds ", result * 1000 ))
 
   return map
 end
@@ -96,6 +103,35 @@ function genHeightMap(width,height)
 
   return map
 end
+
+
+
+
+function normalizeMap(map)
+  smallest = 1000
+
+
+  for i = 1, #map do
+    if map[i].col < smallest then
+      smallest = map[i].col
+    end
+  end
+
+
+
+  for i = 1, #map do
+    map[i].col = map[i].col  - smallest
+    if map[i].col/100  > 1 then
+      subamount = map[i].col - 100
+      map[i].col = map[i].col - subamount
+    end
+
+  end
+  return map
+end
+
+
+
 
 --tmp smooth height map
 function smoothHeightMap(map,height,width)
@@ -211,7 +247,7 @@ function genBiomes (map)
 
 
 
-
-  return bIDCount
+  map.waterPoolIds = bIDCount
+  return map
 
 end

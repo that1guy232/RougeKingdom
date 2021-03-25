@@ -20,26 +20,7 @@ function playerControlSystem:process(e,dt)
 
 
     --export out to like CameraControllerSystem????
-    if e.camera then
 
-      if l and not r then
-          if e.pos.x < 5 then
-          e.pos.x = e.pos.x -e.vel.x*dt
-        end
-      elseif r and not l then
-          e.pos.x = e.pos.x + e.vel.x*dt
-      end
-
-
-      if u and not d then
-          e.pos.y = e.pos.y - e.vel.y*dt
-      elseif d and not u then
-        e.pos.y = e.pos.y + e.vel.y*dt
-
-      end
-
-
-    elseif not e.camera then
 
 
 
@@ -57,42 +38,39 @@ function playerControlSystem:process(e,dt)
         end
 
 
-
+        e.vel.x = 0
+        e.vel.y = 0
       if l and not r then
-        local lessThen5 = e.pos.x < 5
-        if not e.collieded  and  not lessThen5 then
-          e.pos.x = e.pos.x -e.vel.x*dt
-        elseif e.collieded then
-          e.pos.x = e.pos.x +15+e.vel.x*dt
+        local aa = e.pos.x < 25
+    
+        if not aa then
+          e.vel.x = -150
         end
-
       elseif r and not l then
-          local lessThen24995 = e.pos.x < 25000 - 25
+        --if not greater then world widht - 25
+        local bb = e.pos.x > 250000  - 25
+        if not  bb then
+          e.vel.x =  150
+        end
+      else
 
-          if not e.collieded  and   lessThen24995 then
-            e.pos.x = e.pos.x + e.vel.x*dt
-          elseif e.collieded then
-            e.pos.x = e.pos.x - 15 - e.vel.x*dt
-          end
 
       end
 
       if u and not d then
-        local lessThen5 = e.pos.y < 5
-        if not e.collieded and  not lessThen5 then
-          e.pos.y = e.pos.y - e.vel.y*dt
-        elseif e.collieded then
-          e.pos.y = e.pos.y + 15 + e.vel.y*dt
+        local aa = e.pos.y < 25
+        if not  aa then
+          e.vel.y = -150
         end
       elseif d and not u then
-        local greaterThen24995 = e.pos.y > 25000 - 25
-        if not e.collieded and  not greaterThen24995 then
-          e.pos.y = e.pos.y + e.vel.y*dt
-        elseif e.collieded  then
-          e.pos.y = e.pos.y - 15 - e.vel.y*dt
+        local bb = e.pos.y > 250000  - 25
+        if not  bb then
+          e.vel.y = 150
         end
+
+      else
+
       end
-    end
 
 
 

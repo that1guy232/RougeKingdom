@@ -1,8 +1,9 @@
 
 json        = require "libs/json"
 tiny        = require "libs/tiny"
-gamestate  = require "libs/gamestate"
-
+gamestate   = require "libs/gamestate"
+bump        = require "libs/bump"
+bump_debug = require "libs/BumpDebug"
 
 playingStateLib = require "gameStates/playingState"
 SystemsLib = require "Entitys/Systems/Systems"
@@ -28,7 +29,7 @@ local map
 
 local waterdepth = 40
 function love.load()
-
+local start = love.timer.getTime()
 
 
 
@@ -39,10 +40,18 @@ function love.load()
   map = worldInit(w,h,waterdepth)
 
   tiny.addSystem(world,CameraSystem)
-  --tiny.addSystem(world,drawingSystem)
+
+
+
+
+
   tiny.addSystem(world,playerControlSystem)
   tiny.addSystem(world,savingSystem)
-  tiny.addSystem(world,PhysSystem)
+
+  bumpSystem = BumpPhysicsSystem
+  bumpSystem.bumpWorld = bump.newWorld()
+  tiny.addSystem(world,bumpSystem)
+
   tiny.addSystem(world,inventorySystem)
   camera = deepcopy(cameraEnt)
 
@@ -50,25 +59,32 @@ function love.load()
   playerEnt.pos.x = 100
   playerEnt.pos.y = 100
   camera.pos = deepcopy(playerEnt.pos)
-  cw, ch = love.graphics.getDimensions()
+  cw, ch = love.graphics.getDimensions(50)
   camera.hitbox = {w = cw, h = ch}
 
 
-  tree1 = deepcopy(Tree)
-  tree2 = deepcopy(Tree)
-  tree3 = deepcopy(Tree)
-  rock1 = deepcopy(Rock)
-
-  rock1.pos.x = 310
-  rock1.pos.y = 340
-  tree2.pos.y = 90
-  tree3.pos = {x = 500, y = 250}
-  tiny.addEntity(world,tree3)
-  tiny.addEntity(world,tree2)
-  tiny.addEntity(world,tree1)
-  tiny.addEntity(world,rock1)
   playerEnt.inventory = inventorySystem:createInventory(5,5,{})
-  tiny.addEntity(world,playerEnt)
+  --tiny.addEntity(world,playerEnt)
+  table.insert(map.entites,playerEnt)
+  map.player = playerEnt
+
+
+
+
+  print("Map entities: " ..#map.entites)
+  for i = 1, #map.entites do
+
+    tiny.addEntity(world,map.entites[i])
+    bumpSystem.bumpWorld:add(map.entites[i],map.entites[i].pos.x,map.entites[i].pos.y,25,25)
+
+  end
+  print("Done adding map Entites")
+
+
+
+
+
+
   tiny.addEntity(world,camera)
 
 --  print("Player: " ..json.encode(playerEnt:export()))
@@ -77,13 +93,15 @@ function love.load()
   gamestate.registerEvents()
   gamestate.switch(playingState)
 
+
+
+    local result = love.timer.getTime() - start
+    print( string.format( "It took %.3f milliseconds ", result * 1000 ))
+
 end
 
 
-tileSize = 25
-water = love.graphics.newImage("gfx/water.png")
-grass = love.graphics.newImage("gfx/grs1.png")
-psel = 1
+
 
 
 function love.draw()
@@ -93,12 +111,18 @@ function love.draw()
 --tmp height map drawing
 
 
-
+for i = 1, #map.entites do
+  if map.entites[i] then
+    if map.entites[i].markdead then
+      table.remove(map.entites, i)
+    end
+  end
+end
 
 
 world:update(love.timer.getDelta())
 
-
+ --bump_debug.draw(bumpSystem.bumpWorld)
 love.graphics.print(love.timer.getFPS())
 love.graphics.print("PlayerPos: ".. json.encode(playerEnt.pos),0,25)
 
