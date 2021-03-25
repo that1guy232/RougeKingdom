@@ -76,7 +76,7 @@ function inventorySystem:process(e,dt)
           end
 
       end
-    ends
+    end
 
     love.graphics.draw(closeButton,e.inventory.pos.x+15, e.inventory.pos.y - 10)
 
