@@ -120,15 +120,22 @@ gameTiles = {
       },
       {
           name = "closeButton",
-          id = 16,
+          id = 17,
           graphic = love.graphics.newImage("gfx/UI/exit.png"),
           Xoff = 0,
           Yoff = 0
       },
       {
-        name = "closeButton",
-        id = 16,
+        name = "woodCuttersHut",
+        id = 18,
         graphic = love.graphics.newImage("gfx/Buildings/woodCuttersHut.png"),
+        Xoff = 0,
+        Yoff = 0
+      },
+      {
+        name = "woodHut",
+        id = 19,
+        graphic = love.graphics.newImage("gfx/Buildings/woodHut.png"),
         Xoff = 0,
         Yoff = 0
       }

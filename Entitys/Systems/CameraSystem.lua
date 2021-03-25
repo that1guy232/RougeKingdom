@@ -21,7 +21,7 @@ function CameraSystem:process(e,dt)
   local widthinTile = e.hitbox.w / 25
   local heightInTiles = e.hitbox.h / 25
 
---Could move this to main would make more sense setting the posstion of the camera outside the camera, 
+--Could move this to main would make more sense setting the posstion of the camera outside the camera,
   e.pos.x = e.map.player.pos.x - w/2
   e.pos.y = e.map.player.pos.y - h/2
 

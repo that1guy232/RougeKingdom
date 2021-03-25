@@ -67,7 +67,6 @@ function inventorySystem:process(e,dt)
       for x = 1,  e.inventory.width do
         love.graphics.draw(inventoryTile, e.inventory.pos.x + 27 * x, Offset + e.inventory.pos.y + 27 * y)
           local tileIndex = x + y  * e.inventory.width - 5
-          print(json.encode(e.inventory.contents))
           if e.inventory.contents[tileIndex]  then
             local item = getItemByName(e.inventory.contents[tileIndex].itemName)
             love.graphics.draw(item.graphic, e.inventory.pos.x + 27 * x, 8 + Offset + e.inventory.pos.y + 27 * y )
@@ -77,7 +76,7 @@ function inventorySystem:process(e,dt)
           end
 
       end
-    end
+    ends
 
     love.graphics.draw(closeButton,e.inventory.pos.x+15, e.inventory.pos.y - 10)
 

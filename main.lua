@@ -14,6 +14,7 @@ playerLib = require "Entitys/player"
 treeLib = require "Entitys/tree"
 rockLib = require "Entitys/rock"
 cameraLib =  require "Entitys/camera"
+woodHutLib = require "Entitys/woodHut"
 world = tiny.world()
 
 --oldcode libs rework
@@ -65,8 +66,15 @@ local start = love.timer.getTime()
 
   playerEnt.inventory = inventorySystem:createInventory(5,5,{})
   --tiny.addEntity(world,playerEnt)
+
+table.insert(map.entites,woodHut)
+
   table.insert(map.entites,playerEnt)
+
   map.player = playerEnt
+
+
+
 
 
 
@@ -75,7 +83,7 @@ local start = love.timer.getTime()
   for i = 1, #map.entites do
 
     tiny.addEntity(world,map.entites[i])
-    bumpSystem.bumpWorld:add(map.entites[i],map.entites[i].pos.x,map.entites[i].pos.y,25,25)
+    bumpSystem.bumpWorld:add(map.entites[i],map.entites[i].pos.x,map.entites[i].pos.y,map.entites[i].hitbox.w,map.entites[i].hitbox.h)
 
   end
   print("Done adding map Entites")
