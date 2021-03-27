@@ -16,7 +16,7 @@ function playerControlSystem:process(e,dt)
   -- return the tile type?name? if possable.
 
     local l, r, u,d = love.keyboard.isDown('a'), love.keyboard.isDown('d'), love.keyboard.isDown('w'),love.keyboard.isDown('s')
-
+    local sprint = love.keyboard.isDown("lshift")
 
 
     --export out to like CameraControllerSystem????
@@ -40,21 +40,20 @@ function playerControlSystem:process(e,dt)
 
         e.vel.x = 0
         e.vel.y = 0
+
       if l and not r then
         local aa = e.pos.x < 25
-    
+
         if not aa then
           e.vel.x = -150
         end
+
       elseif r and not l then
         --if not greater then world widht - 25
         local bb = e.pos.x > 250000  - 25
         if not  bb then
           e.vel.x =  150
         end
-      else
-
-
       end
 
       if u and not d then
@@ -67,11 +66,20 @@ function playerControlSystem:process(e,dt)
         if not  bb then
           e.vel.y = 150
         end
-
-      else
-
       end
 
+      if sprint then
+        if e.vel.y > 0 then
+          e.vel.y = e.vel.y + 250
+        elseif e.vel.y < 0 then
+          e.vel.y = e.vel.y - 250
+        end
 
+        if e.vel.x > 0 then
+          e.vel.x = e.vel.x + 250
+        elseif e.vel.x < 0 then
+          e.vel.x = e.vel.x - 250
+        end
+      end
 
 end
