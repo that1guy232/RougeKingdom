@@ -138,6 +138,13 @@ gameTiles = {
         graphic = love.graphics.newImage("gfx/Buildings/woodHut.png"),
         Xoff = 0,
         Yoff = 0
+      },
+      {
+        name = "craftButton",
+        id = 20,
+        graphic = love.graphics.newImage("gfx/UI/craft.png"),
+        Xoff = 0,
+        Yoff = 0
       }
 
 
