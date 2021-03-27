@@ -12,10 +12,10 @@ function inventorySystem:process(e,dt)
 
 
     local inventoryCorner = getTileByName("inventoryCorner").graphic
-    local inventoryTop = getTileByName("inventoryTop").graphic
-    local inventoryTile = getTileByName("inventoryTile").graphic
-    local closeButton = getTileByName("closeButton").graphic
-
+    local inventoryTop    = getTileByName("inventoryTop").graphic
+    local inventoryTile   = getTileByName("inventoryTile").graphic
+    local closeButton     = getTileByName("closeButton").graphic
+    local craftButton     = getTileByName("craftButton").graphic
 
     if love.mouse.isDown(1) then
       local mouseX = love.mouse.getX()
@@ -27,15 +27,26 @@ function inventorySystem:process(e,dt)
           and mouseX < 27 + e.inventory.pos.x + e.inventory.width*27
           and  mouseY > e.inventory.pos.y
           and mouseY < e.inventory.pos.y + 27 then
+
             e.inventory.moving = true
         end
 
       --Bounds for the close button 15 is offset of close button, 23 is the width of the sprite
+      if mouseX > e.inventory.pos.x + 27 * e.inventory.width
+        and mouseX < e.inventory.pos.x + 27 * e.inventory.width + 23
+        and mouseY < e.inventory.pos.y + 10
+        and mouseY > e.inventory.pos.y  then
+            e.inventory.visable = false
+      end
+
+
+
+      --bounds for craft buttonS
       if mouseX > e.inventory.pos.x + 15
         and mouseX < e.inventory.pos.x + 15 + 23
         and mouseY < e.inventory.pos.y + 2
         and mouseY > e.inventory.pos.y - 12 then
-        e.inventory.visable = false
+          print("craft button")
       end
 
     else
@@ -43,14 +54,13 @@ function inventorySystem:process(e,dt)
     end
 
 
-    if e.inventory.moving then
+
       function love.mousemoved(x, y, dx, dy)
-        if love.mouse.isDown(1) then
+        if love.mouse.isDown(1) and e.inventory.moving then
           e.inventory.pos.x = e.inventory.pos.x + dx
           e.inventory.pos.y = e.inventory.pos.y + dy
         end
       end
-    end
 
 
     --27 is the size of the inventory tiles I should unhard code this because this is just really poor.
@@ -78,7 +88,8 @@ function inventorySystem:process(e,dt)
       end
     end
 
-    love.graphics.draw(closeButton,e.inventory.pos.x+15, e.inventory.pos.y - 10)
+    love.graphics.draw(closeButton,e.inventory.pos.x + 27 * e.inventory.width, e.inventory.pos.y - 15)
+    love.graphics.draw(craftButton,e.inventory.pos.x+25, e.inventory.pos.y - 15)
 
     love.graphics.print({{120/255, 255/255, 12/255},e.name},e.inventory.pos.x+30,e.inventory.pos.y+2,0,0.8,0.8)
 
